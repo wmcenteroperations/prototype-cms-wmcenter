@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -2912,27 +2912,66 @@
         </div>
 
         <div>
-          <span style="font-size: 12px; font-weight: 700; color: #0f172a; display: block; margin-bottom: 8px;">Keputusan Reservasi Kunjungan Lanjutan:</span>
-
-          <!-- PILIHAN 1: RESERVASI KUNJUNGAN BERIKUTNYA (MENUJU PENDAFTARAN BARU AUTOFILL) -->
-          <div class="btn-prebook-card" onclick="goToPrebook()" style="border: 1.5px solid #3b82f6; background: #ffffff; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 1px 3px rgba(59, 130, 246, 0.1);">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <div style="width: 32px; height: 32px; border-radius: 6px; background: #eff6ff; display: flex; align-items: center; justify-content: center; font-size: 18px;">
-                &#128197;
+          <!-- SMART NEXT VISIT RECOMMENDATION CARD -->
+          <div style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border: 1.5px solid #86efac; border-radius: 12px; padding: 13px 14px; margin-bottom: 12px; position: relative;">
+            <div style="position: absolute; top: -8px; right: 12px; background: #10b981; color: #ffffff; font-size: 8.5px; font-weight: 800; letter-spacing: 0.5px; padding: 2px 7px; border-radius: 999px;">
+              REKOMENDASI KLINIS TERAPIS
+            </div>
+            
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <div style="font-size: 11.5px; font-weight: 700; color: #065f46; display: flex; align-items: center; gap: 6px;">
+                <span>ðŸ“…</span>
+                <span>Anjuran Terapi Lanjutan:</span>
               </div>
-              <div>
-                <div class="prebook-card-title" style="font-size: 12.5px; font-weight: 700; color: #2563eb;">Reservasi Kunjungan Berikutnya</div>
-                <div class="prebook-card-sub" style="font-size: 10.5px; color: #3b82f6; margin-top: 1px;">Arahkan ke Formulir Registrasi Baru (Data Pasien Otomatis Terisi)</div>
+              <div style="background: #d1fae5; color: #047857; font-size: 10px; font-weight: 700; padding: 2.5px 7px; border-radius: 6px; border: 1px solid #a7f3d0;">
+                Protokol: 7 Hari Lagi
               </div>
             </div>
-            <div style="font-weight: 800; font-size: 18px; color: #2563eb;">&#10148;</div>
+
+            <div style="font-size: 10px; font-weight: 600; color: #047857; margin-bottom: 5px;">Pilihan Cepat Tanggal (Sesuai Jadwal Fisio):</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 9px;" id="recomDateGroup">
+              <div class="chip-recom-date active" onclick="selectRecomDate(this, 'Selasa, 08 Nov', '2026-11-08')" style="background: #059669; border: 1.5px solid #059669; color: #ffffff; border-radius: 8px; padding: 6px 4px; text-align: center; cursor: pointer; transition: all 0.15s ease;">
+                <div style="font-size: 11px; font-weight: 700; line-height: 1.1;">Selasa, 08 Nov</div>
+                <div style="font-size: 9px; color: #d1fae5; margin-top: 2px;">â˜… Direkomendasikan</div>
+              </div>
+              <div class="chip-recom-date" onclick="selectRecomDate(this, 'Kamis, 10 Nov', '2026-11-10')" style="background: #ffffff; border: 1.5px solid #cbd5e1; color: #334155; border-radius: 8px; padding: 6px 4px; text-align: center; cursor: pointer; transition: all 0.15s ease;">
+                <div style="font-size: 11px; font-weight: 700; line-height: 1.1;">Kamis, 10 Nov</div>
+                <div style="font-size: 9px; color: #64748b; margin-top: 2px;">9 Hari Lagi</div>
+              </div>
+              <div class="chip-recom-date" onclick="selectRecomDate(this, 'Pilih Tanggal...', '')" style="background: #ffffff; border: 1.5px solid #cbd5e1; color: #334155; border-radius: 8px; padding: 6px 4px; text-align: center; cursor: pointer; transition: all 0.15s ease;">
+                <div style="font-size: 11px; font-weight: 700; line-height: 1.1;">Pilih Tanggal...</div>
+                <div style="font-size: 9px; color: #64748b; margin-top: 2px;">Kalender Bebas</div>
+              </div>
+            </div>
+
+            <div style="font-size: 10px; font-weight: 600; color: #047857; margin-bottom: 5px;">Pilihan Jam Tersedia (Fisioterapis):</div>
+            <div style="display: flex; align-items: center; gap: 6px;" id="recomTimeGroup">
+              <div class="chip-recom-time" onclick="selectRecomTime(this, '09:00')" style="flex: 1; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px 0; font-size: 11px; font-weight: 600; text-align: center; color: #334155; cursor: pointer;">09:00</div>
+              <div class="chip-recom-time active" onclick="selectRecomTime(this, '11:00')" style="flex: 1; background: #047857; border: 1px solid #047857; border-radius: 6px; padding: 5px 0; font-size: 11px; font-weight: 700; text-align: center; color: #ffffff; cursor: pointer;">11:00 âœ“</div>
+              <div class="chip-recom-time" onclick="selectRecomTime(this, '14:00')" style="flex: 1; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px 0; font-size: 11px; font-weight: 600; text-align: center; color: #334155; cursor: pointer;">14:00</div>
+              <div class="chip-recom-time" onclick="selectRecomTime(this, '16:00')" style="flex: 1; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px 0; font-size: 11px; font-weight: 600; text-align: center; color: #334155; cursor: pointer;">16:00</div>
+            </div>
+          </div>
+
+          <!-- TOMBOL KUNCI JADWAL PREBOOK (MENUJU PENDAFTARAN BARU AUTOFILL) -->
+          <div class="btn-prebook-card" onclick="goToPrebook()" style="border: 1.5px solid #2563eb; background: #2563eb; color: #ffffff; border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 32px; height: 32px; border-radius: 6px; background: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                ðŸ“…
+              </div>
+              <div style="text-align: left;">
+                <div id="btnPrebookTitle" style="font-size: 12.5px; font-weight: 800; color: #ffffff; line-height: 1.2;">Kunci Jadwal: Selasa, 08 Nov (11:00)</div>
+                <div style="font-size: 10px; color: rgba(255, 255, 255, 0.85); margin-top: 2px;">Autofill Formulir & Kunci Sesi Terapi</div>
+              </div>
+            </div>
+            <div style="font-weight: 800; font-size: 18px; color: #ffffff;">âž”</div>
           </div>
 
           <!-- PILIHAN 2: PASIEN BELUM MENJADWALKAN KUNJUNGAN (DROPOFF TOGGLE) -->
           <div class="btn-dropoff-toggle" id="btnDropoffToggle" onclick="toggleDropoff()" style="border: 1px solid #cbd5e1; background: #ffffff; border-radius: 10px; padding: 11px 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; margin-top: 8px; transition: all 0.15s ease; user-select: none;">
             <div style="display: flex; align-items: center; gap: 8px;">
               <span style="color: #ef4444; font-size: 15px; font-weight: bold; line-height: 1;">&#8856;</span>
-              <span style="font-size: 11.5px; font-weight: 600; color: #475569;">Pasien Belum Menjadwalkan Kunjungan (Pilih Alasan)</span>
+              <span style="font-size: 11.5px; font-weight: 600; color: #475569;">Pasien Belum Bisa Jadwal Sekarang (Pilih Alasan)</span>
             </div>
             <span id="caretD" style="color: #64748b; font-size: 11px; font-weight: bold;">&#9660;</span>
           </div>
@@ -3499,7 +3538,7 @@
       }
       const banner = document.getElementById('regAutofillBanner');
       if (banner) {
-        banner.innerHTML = '&#10024; Data Pasien <b>' + p.name + ' (' + p.rm + ')</b>, Lokasi BSD, & Fisioterapis <b>' + (p.fisio || 'Vanya Naura Qatrunnada') + '</b> telah otomatis terisi dari sesi check-out (Zero Re-typing)!';
+        banner.innerHTML = '&#10024; Jadwal Kunjungan <b>' + selectedRecomDateStr + ' (' + selectedRecomTimeStr + ')</b> & Data Pasien <b>' + p.name + ' (' + p.rm + ')</b> otomatis terisi (Zero Re-typing)!';
       }
 
       // 3. Close checkout modal and switch to registration view

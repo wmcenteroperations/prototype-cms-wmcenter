@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -1850,7 +1850,7 @@
                 <td style="text-align: center;" id="status-col-gp">
                   <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
                     <span style="background: #dcfce7; color: #15803d; border: 1px solid #86efac; font-size: 9.5px; font-weight: 700; padding: 1.5px 6px; border-radius: 10px;">&#10003; Checked In</span>
-                    <button class="btn-jemput-bed" onclick="openAssignBedModal('Gusti Pradista Mochtar', 'RM-2026-0285', 'Vanya Naura Qatrunnada', 'row-gp')">&#9654; Jemput & Assign Bed</button>
+                    <button class="btn-jemput-bed" onclick="openAssignBedModal('Gusti Pradista Mochtar', 'RM-2026-0285', 'Vanya Naura Qatrunnada', 'row-gp')">&#9654; Mulai Treatment</button>
                   </div>
                 </td>
                 <td style="text-align: center;">-</td>
@@ -2795,7 +2795,7 @@
 
           <!-- TOMBOL KONFIRMASI PENJEMPUTAN & ASSIGN BED -->
           <button type="button" class="btn-confirm-checkin-green" style="width: 100%; padding: 11px; font-size: 13px; background: #0284c7;" onclick="executeStartTherapy()">
-            <span id="btnStartTherapyText">&#9654; Konfirmasi Penjemputan & Assign Bed</span>
+            <span id="btnStartTherapyText">&#9654; Konfirmasi & Mulai Treatment</span>
           </button>
         </div>
       </div>
@@ -3281,7 +3281,7 @@
       if (statusCol) {
         statusCol.innerHTML = '<div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">' +
           '<span style="background: #dcfce7; color: #15803d; border: 1px solid #86efac; font-size: 9.5px; font-weight: 700; padding: 1.5px 6px; border-radius: 10px;">&#10003; Checked In</span>' +
-          '<button class="btn-jemput-bed" onclick="openAssignBedModal(\'' + data.name + '\', \'' + data.rm + '\', \'' + data.fisio + '\', \'' + data.rowId + '\')">&#9654; Jemput & Assign Bed</button>' +
+          '<button class="btn-jemput-bed" onclick="openAssignBedModal(\'' + data.name + '\', \'' + data.rm + '\', \'' + data.fisio + '\', \'' + data.rowId + '\')">&#9654; Mulai Treatment</button>' +
           '</div>';
       }
 

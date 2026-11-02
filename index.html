@@ -3518,46 +3518,115 @@
       }
     }
 
+    // ==========================================
+    // SMART NEXT VISIT RECOMMENDATION LOGIC
+    // ==========================================
+    var selectedRecomDateStr = 'Selasa, 08 Nov';
+    var selectedRecomTimeStr = '11:00';
+
+    function selectRecomDate(el, dateText) {
+      var chips = document.querySelectorAll('#recomDateGroup .chip-recom-date');
+      for (var i = 0; i < chips.length; i++) {
+        chips[i].style.background = '#ffffff';
+        chips[i].style.borderColor = '#cbd5e1';
+        chips[i].style.color = '#334155';
+        var sub = chips[i].querySelector('div:last-child');
+        if (sub) sub.style.color = '#64748b';
+      }
+      el.style.background = '#059669';
+      el.style.borderColor = '#059669';
+      el.style.color = '#ffffff';
+      var subActive = el.querySelector('div:last-child');
+      if (subActive) subActive.style.color = '#d1fae5';
+
+      selectedRecomDateStr = dateText;
+      updatePrebookBtnText();
+    }
+
+    function selectRecomTime(el, timeText) {
+      var chips = document.querySelectorAll('#recomTimeGroup .chip-recom-time');
+      for (var i = 0; i < chips.length; i++) {
+        chips[i].style.background = '#ffffff';
+        chips[i].style.borderColor = '#cbd5e1';
+        chips[i].style.color = '#334155';
+        chips[i].style.fontWeight = '600';
+        var rawTime = chips[i].getAttribute('data-time') || chips[i].innerText.replace(' âœ“', '').trim();
+        chips[i].innerHTML = rawTime;
+      }
+      el.style.background = '#047857';
+      el.style.borderColor = '#047857';
+      el.style.color = '#ffffff';
+      el.style.fontWeight = '700';
+      el.innerHTML = timeText + ' &#10003;';
+
+      selectedRecomTimeStr = timeText;
+      updatePrebookBtnText();
+    }
+
+    function updatePrebookBtnText() {
+      var btn = document.getElementById('btnPrebookTitle');
+      if (btn) {
+        if (selectedRecomDateStr && selectedRecomDateStr.indexOf('Pilih Tanggal') !== -1) {
+          btn.innerText = 'Pilih Jadwal di Formulir Registrasi';
+        } else {
+          btn.innerText = 'Kunci Jadwal: ' + selectedRecomDateStr + ' (' + selectedRecomTimeStr + ')';
+        }
+      }
+    }
+
+    function goToPrebookFast() {
+      var p = window.currentCheckout || { name: 'Deby Kurnia', rm: 'RM-2026-0610', fisio: 'Vanya Naura Qatrunnada', rowId: 'row-dk' };
+      markPatientSelesai(p);
+      fillRegistrationForm(p, selectedRecomDateStr + ' (' + selectedRecomTimeStr + ')');
+    }
+
+    function goToPrebookManual() {
+      var p = window.currentCheckout || { name: 'Deby Kurnia', rm: 'RM-2026-0610', fisio: 'Vanya Naura Qatrunnada', rowId: 'row-dk' };
+      markPatientSelesai(p);
+      fillRegistrationForm(p, 'Pencarian Kalender Manual');
+    }
+
     function goToPrebook() {
-      const p = window.currentCheckout || { name: 'Deby Kurnia', rm: 'RM-2026-0610', fisio: 'Vanya Naura Qatrunnada', rowId: 'row-dk' };
-      
-      // 1. Move patient row status to selesai in CMS table
+      goToPrebookFast();
+    }
+
+    function markPatientSelesai(p) {
       if (p.rowId) {
-        const row = document.getElementById(p.rowId);
+        var row = document.getElementById(p.rowId);
         if (row) {
           row.setAttribute('data-status', 'selesai');
-          const id = p.rowId.replace('row-', '');
-          const statusCol = document.getElementById('status-col-' + id);
+          var id = p.rowId.replace('row-', '');
+          var statusCol = document.getElementById('status-col-' + id);
           if (statusCol) {
             statusCol.innerHTML = '<span class="badge-status-completed" style="background: #dcfce7; color: #15803d; border: 1px solid #86efac; font-size: 10px; font-weight: 700; padding: 2.5px 8px; border-radius: 12px; display: inline-block;">&#10003; Selesai & Prebook</span>';
           }
-          const actionCol = document.getElementById('action-col-' + id);
+          var actionCol = document.getElementById('action-col-' + id);
           if (actionCol) {
             actionCol.innerHTML = '<span style="font-size: 9.5px; color: #15803d; font-weight: 700;">&#10003; Prebook Form</span>';
           }
         }
       }
+    }
 
-      // 2. Autofill Registration Form (Zero Re-typing!)
-      const regInput = document.getElementById('regPatientInput');
+    function fillRegistrationForm(p, scheduleText) {
+      var regInput = document.getElementById('regPatientInput');
       if (regInput) {
         regInput.value = p.name + ' (' + p.rm + ')';
         regInput.style.background = '#f0fdf4';
         regInput.style.borderColor = '#22c55e';
       }
-      const regPhysioInput = document.getElementById('regPhysioInput');
+      var regPhysioInput = document.getElementById('regPhysioInput');
       if (regPhysioInput && p.fisio) {
         regPhysioInput.value = p.fisio;
       }
-      const banner = document.getElementById('regAutofillBanner');
+      var banner = document.getElementById('regAutofillBanner');
       if (banner) {
-        banner.innerHTML = '&#10024; Jadwal Kunjungan <b>' + selectedRecomDateStr + ' (' + selectedRecomTimeStr + ')</b> & Data Pasien <b>' + p.name + ' (' + p.rm + ')</b> otomatis terisi (Zero Re-typing)!';
+        banner.innerHTML = '&#10024; Jadwal: <b>' + scheduleText + '</b> &bull; Data Pasien <b>' + p.name + ' (' + p.rm + ')</b>, Lokasi BSD otomatis terisi (Zero Re-typing)!';
       }
 
-      // 3. Close checkout modal and switch to registration view
       closeCheckout();
       showRegistration();
-      showToast('&#10003; Berpindah ke Formulir Pendaftaran Baru. Data pasien ' + p.name + ' otomatis terisi!');
+      showToast('&#10003; Berpindah ke Formulir Pendaftaran Baru. Jadwal: ' + scheduleText);
     }
 
     function pickSlot(el) {
